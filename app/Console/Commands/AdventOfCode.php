@@ -37,7 +37,7 @@ class AdventOfCode extends Command
             $this->info('Advent of code 2023');
             $selection = Str::remove(' ', select(
                 label: 'Select a day to run its script...',
-                options: ['Day 1', 'Exit'],
+                options: ['Day 1', 'Day 2', 'Exit'],
             ));
 
             if($selection == "Exit") {

@@ -30,10 +30,10 @@ class Day2 extends Command
     public function handle()
     {
         $val1 = $this->part1();
-        // $val2 = $this->part2();
+        $val2 = $this->part2();
 
         $this->info("Part 1: ".$val1);
-        // $this->info("Part 2: ".$val2);
+        $this->info("Part 2: ".$val2);
     }
 
     protected function part1() {
@@ -94,6 +94,36 @@ class Day2 extends Command
     }
 
     protected function part2() {
-        //
+        $file_contents = $this->openAocFile($this->fileDay);
+
+        $power_sum = 0;
+        
+        foreach($file_contents as $line) {
+            $game_cube_maxs = [
+                'red' => 0,
+                'green' => 0,
+                'blue' => 0
+            ];
+
+            $game_and_sets = explode(': ', $line);
+            $game_info = explode(' ', $game_and_sets[0]);
+            $game_id = $game_info[1];
+            $sets = explode('; ', $game_and_sets[1]);
+
+            foreach($sets as $set) {
+                $cubes = explode(', ', $set);
+                foreach($cubes as $cube) {
+                    list($cube_total, $cube_color) = explode(' ', $cube);
+
+                    if($cube_total > $game_cube_maxs[$cube_color]) {
+                        $game_cube_maxs[$cube_color] = $cube_total;
+                    }
+                }
+            }
+
+            $power_sum += ($game_cube_maxs['red'] * $game_cube_maxs['green'] * $game_cube_maxs['blue']);
+        }
+
+        return $power_sum;
     }
 }
